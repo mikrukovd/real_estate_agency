@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Flat, Complaint
 
 
-class SearchFlat(admin.ModelAdmin):
+class FlatAdmin(admin.ModelAdmin):
     search_fields = ["town", "address", "owner"]
     readonly_fields = ["created_at"]
     list_display = ["address", "price", "new_building", "construction_year", "town"]
@@ -16,5 +16,5 @@ class ComplaintAdmin(admin.ModelAdmin):
     raw_id_fields = ["apartments"]
 
 
-admin.site.register(Flat, SearchFlat) 
+admin.site.register(Flat, FlatAdmin)
 admin.site.register(Complaint, ComplaintAdmin)
