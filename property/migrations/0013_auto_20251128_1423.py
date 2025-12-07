@@ -6,8 +6,8 @@ from django.db import migrations
 def migrate_owners(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
-    for flat in Flat.objects.all():
-        owner, created = Owner.objects.all().get_or_create(
+    for flat in Flat.objects.iterator():
+        owner, created = Owner.objects.get_or_create(
             full_name=flat.owner,
             phonenumber=flat.owners_phonenumber,
             pure_phone=flat.owner_pure_phone
@@ -18,7 +18,7 @@ def migrate_owners(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0013_alter_owner_flats'),
+        ('property', '0012_alter_owner_flats'),
     ]
 
     operations = [

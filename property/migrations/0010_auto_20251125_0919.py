@@ -6,7 +6,7 @@ import phonenumbers
 
 def update_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
+    for flat in Flat.objects.iterator():
         parsed_number = phonenumbers.parse(
             number=flat.owners_phonenumber,
             region='RU',
@@ -24,7 +24,7 @@ def update_pure_phone(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0010_flat_owner_pure_phone'),
+        ('property', '0009_flat_owner_pure_phone'),
     ]
 
     operations = [

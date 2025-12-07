@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0009_flat_liked_by'),
+        ('property', '0008_flat_liked_by'),
     ]
 
     operations = [

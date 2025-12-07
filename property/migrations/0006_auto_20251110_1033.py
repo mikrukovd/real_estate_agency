@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0006_auto_20251110_1016'),
+        ('property', '0005_alter_flat_new_building'),
     ]
 
     def update_new_building(apps, schema_editor):
