@@ -5,19 +5,18 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Flat(models.Model):
-    owner = models.CharField('ФИО владельца', max_length=200)
-    owner_pure_phone = PhoneNumberField(
-        'Нормализированный номер владельца',
-        blank=True,
+    new_building = models.BooleanField(
+        'Новостройка',
         null=True,
+        blank=True,
+        db_index=True
     )
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    new_building = models.BooleanField('Новостройка', null=True, blank=True)
     liked_by = models.ManyToManyField(
         User,
         verbose_name='Кто лайкнул',
         blank=True,
         null=True,
+        related_name='liked_flats'
     )
     created_at = models.DateTimeField(
         'Когда создано объявление',
@@ -70,11 +69,13 @@ class Complaint(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name='Жалоба от',
+        related_name='complaints'
     )
     apartments = models.ForeignKey(
         Flat,
         on_delete=models.CASCADE,
         verbose_name='Жалоба на квартиру',
+        related_name='complaints'
     )
     complaint = models.TextField('Жалоба')
 
@@ -91,6 +92,7 @@ class Owner(models.Model):
         'Flat',
         verbose_name='Квартиры в собственности',
         related_name='owners',
+        blank=True,
     )
 
     def __str__(self):
