@@ -7,16 +7,19 @@ import phonenumbers
 def update_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.iterator():
-        parsed_number = phonenumbers.parse(
-            number=flat.owners_phonenumber,
-            region='RU',
-        )
-        if phonenumbers.is_valid_number(parsed_number):
-            flat.owner_pure_phone = phonenumbers.format_number(
-                parsed_number,
-                phonenumbers.PhoneNumberFormat.E164
+        try:
+            parsed_number = phonenumbers.parse(
+                number=flat.owners_phonenumber,
+                region='RU',
             )
-        else:
+            if phonenumbers.is_valid_number(parsed_number):
+                flat.owner_pure_phone = phonenumbers.format_number(
+                    parsed_number,
+                    phonenumbers.PhoneNumberFormat.E164
+                )
+            else:
+                flat.owner_pure_phone = None
+        except phonenumbers.NumberParseException:
             flat.owner_pure_phone = None
         flat.save()
 
